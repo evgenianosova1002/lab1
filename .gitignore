@@ -1,0 +1,29 @@
+# Visual Studio
+.vs/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# C++/MSVC build artifacts
+Debug/
+Release/
+x64/
+x86/
+bin/
+obj/
+ipch/
+*.VC.db
+*.vc.db
+*.opendb
+*.ilk
+*.pdb
+*.idb
+*.tlog
+*.log
+
+# Інше
+*.exe
+*.dll
+*.lib
+*.exp
