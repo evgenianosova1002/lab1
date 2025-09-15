@@ -7,7 +7,7 @@ class Board {
 private:
     int board_size;
     int sell_selection;
-\
+
     std::vector<std::vector<int>> frequencies;
 
     std::mt19937 gen;
@@ -16,7 +16,7 @@ private:
 public:
     Board(int board_size, int sell_selection);
 
-    void runExperiment();
+    void run_experiment();
 
     double mean_multiplicity() const;
 
