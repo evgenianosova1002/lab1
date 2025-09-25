@@ -19,6 +19,5 @@ public:
     void run_experiment();
 
     double mean_multiplicity() const;
-
     double median_multiplicity() const;
 };
