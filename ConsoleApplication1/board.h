@@ -6,18 +6,19 @@
 class Board {
 private:
     int board_size;
-    int sell_selection;
+    int cell_selection_count;
 
     std::vector<std::vector<int>> frequencies;
-
-    std::mt19937 gen;
-    std::uniform_int_distribution<int> dist;
+	RandomCell random_cell_picker;
 
 public:
-    Board(int board_size, int sell_selection);
+    Board(int board_size, int cell_selection_count);
 
     void run_experiment();
+    void reset();
 
     double mean_multiplicity() const;
     double median_multiplicity() const;
+
+	const std::vector<std::vector<int>>& frequencies() const { return cell_frequencies; }
 };
