@@ -14,6 +14,13 @@ public:
           dist(0, board_size - 1) {}
 
     std::pair<int, int> operator()() {
+        int x = dist(gen);
+        int y = dist(gen);
+        return {x, y};
+    }
+private:
+    std::pair<int,int> generate() {
         return {dist(gen), dist(gen)};
     }
+
 };
