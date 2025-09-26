@@ -11,20 +11,20 @@ int main()
 	int board_size = 0;
 	int cell_selection_count = 0;
 
-	cout << "Enter n (board size): ";
-	cin >> board_size;
-
-	cout << "Enter t (number of cell selections): ";
-	cin >> cell_selection_count;
-
-	if (board_size <= 0) {
+	cout << "Enter n (board size, n > 0): ";
+	if (!(cin >> board_size) || board_size <= 0) {
 		cerr << "Error: n must be > 0.\n";
 		return 1;
 	}
-	if (cell_selection_count < 0) {
+
+	cout << "Enter t (number of cell selections, t >= 0): ";
+	if (!(cin >> cell_selection_count) || cell_selection_count < 0) {
 		cerr << "Error: t must be >= 0.\n";
 		return 1;
 	}
+
+	Board board(board_size, cell_selection_count);
+	board.run_experiment();
 
 	return 0;
 }
