@@ -26,5 +26,15 @@ int main()
 	Board board(board_size, cell_selection_count);
 	board.run_experiment();
 
+	double r = static_cast<double>(cell_selection_count) /
+		   (board_size * board_size);
+
+	double mean_value = board.mean_multiplicity();
+	double median_value = board.median_multiplicity();
+
+	cout << "r = " << r << "\n";
+	cout << "mean = " << mean_value << "\n";
+	cout << "median = " << median_value << "\n";
+
 	return 0;
 }
