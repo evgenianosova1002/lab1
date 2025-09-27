@@ -8,7 +8,7 @@ private:
     int board_size;
     int cell_selection_count;
 
-    std::vector<std::vector<int>> frequencies;
+    std::vector<std::vector<int>> cell_frequencies;
 	RandomCell random_cell_picker;
 
 public:
