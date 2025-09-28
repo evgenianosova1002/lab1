@@ -6,6 +6,15 @@
 
 using namespace std;
 
+void print_heatmap(const vector<vector<int>>& grid) {
+	for (const auto& row : grid) {
+		for (int v : row) {
+			cout << v << " ";
+		}
+		cout << "\n";
+	}
+}
+
 int main()
 {
 	int board_size = 0;
@@ -27,14 +36,16 @@ int main()
 	board.run_experiment();
 
 	double r = static_cast<double>(cell_selection_count) /
-		   (board_size * board_size);
-
+			   (static_cast<double>(board_size) * board_size);
 	double mean_value = board.mean_multiplicity();
 	double median_value = board.median_multiplicity();
 
-	cout << "r = " << r << "\n";
-	cout << "mean = " << mean_value << "\n";
-	cout << "median = " << median_value << "\n";
+	cout << "n = " << board_size
+			  << ", t = " << cell_selection_count
+			  << ", r = t/n^2 = " << r << "\n";
+	cout << "Mean multiplicity:   " << mean_value << "\n";
+	cout << "Median multiplicity: " << median_value << "\n";
+
 
 	return 0;
 }

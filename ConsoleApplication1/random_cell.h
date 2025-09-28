@@ -13,14 +13,7 @@ public:
           gen(std::random_device{}()),
           dist(0, board_size - 1) {}
 
-    std::pair<int, int> operator()() {
-        int x = dist(gen);
-        int y = dist(gen);
-        return {x, y};
+    std::pair<int,int> operator()() {
+        return { dist(gen), dist(gen) };
     }
-private:
-    std::pair<int,int> generate() {
-        return {dist(gen), dist(gen)};
-    }
-
 };

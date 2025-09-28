@@ -1,7 +1,7 @@
 #pragma once
 
 #include <vector>
-#include <random>
+#include "random_cell.h"
 
 class Board {
 private:
