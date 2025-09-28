@@ -63,7 +63,7 @@ static void insertion_sort(std::vector<int>& data) {
 
 double Board::median_multiplicity() const {
 
-	std::vector<int> flat;
+	vector<int> flat;
 	flat.reserve(static_cast<size_t>(board_size) * static_cast<size_t>(board_size));
 
 	for (const auto& row : cell_frequencies) {

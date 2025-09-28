@@ -1,22 +1,29 @@
-﻿#include "board.h"
-#include <iostream>
+﻿#include <iostream>
 #include <iomanip>
 #include <vector>
 #include <string>
+#include "board.h"
 
 using namespace std;
 
-void print_heatmap(const vector<vector<int>>& grid) {
-	for (const auto& row : grid) {
+static void print_heatmap(const vector<vector<int>>& grid) {
+	int width = 0;
+	for (const auto& row : grid)
 		for (int v : row) {
-			cout << v << " ";
+			int w = static_cast<int>(to_string(v).size());
+			if (w > width) width = w;
 		}
-		cout << "\n";
+	for (const auto& row : grid) {
+		for (int v : row) cout << setw(width + 1) << v;
+		cout << '\n';
 	}
 }
 
 int main()
 {
+	ios::sync_with_stdio(false);
+	cin.tie(nullptr);
+
 	int board_size = 0;
 	int cell_selection_count = 0;
 
@@ -40,12 +47,16 @@ int main()
 	double mean_value = board.mean_multiplicity();
 	double median_value = board.median_multiplicity();
 
+	cout << fixed << setprecision(6);
+	cout << "\nMain Results:\n";
 	cout << "n = " << board_size
 			  << ", t = " << cell_selection_count
 			  << ", r = t/n^2 = " << r << "\n";
 	cout << "Mean multiplicity:   " << mean_value << "\n";
 	cout << "Median multiplicity: " << median_value << "\n";
 
+	cout << "\nFrequency heatmap (" << board_size << "x" << board_size << "):\n";
+	print_heatmap(board.frequencies());
 
 	return 0;
 }
