@@ -60,11 +60,25 @@ int main()
 			  << ", t = " << cell_selection_count
 			  << ", r = t/n^2 = " << r << "\n";
 
-	cout << "Mean multiplicity:   " << mean_value << "\n";
+	cout << "\nMean multiplicity:   " << mean_value << "\n";
 	cout << "Median multiplicity: " << median_value << "\n";
 
 	cout << "\nFrequency heatmap (" << board_size << "x" << board_size << "):\n";
 	print_heatmap(board.frequencies());
+
+	cout << "\nExperiment with different r:\n";
+	vector<double> r_values = { 0.5, 1.0, 2.0, 5.0 };
+
+	for (double rv : r_values) {
+
+		int t = static_cast<int>(rv * board_size * board_size);
+		Board b(board_size, t);
+		b.run_experiment();
+		cout << "r = " << rv
+			<< " (t = " << t << "): "
+			<< "mean = " << b.mean_multiplicity()
+			<< ", median = " << b.median_multiplicity() << "\n";
+	}
 
 	return 0;
 }
