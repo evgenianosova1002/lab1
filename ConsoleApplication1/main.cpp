@@ -7,13 +7,17 @@
 using namespace std;
 
 static void print_heatmap(const vector<vector<int>>& grid) {
+
 	int width = 0;
 	for (const auto& row : grid)
+
 		for (int v : row) {
+
 			int w = static_cast<int>(to_string(v).size());
 			if (w > width) width = w;
 		}
 	for (const auto& row : grid) {
+
 		for (int v : row) cout << setw(width + 1) << v;
 		cout << '\n';
 	}
@@ -29,12 +33,14 @@ int main()
 
 	cout << "Enter n (board size, n > 0): ";
 	if (!(cin >> board_size) || board_size <= 0) {
+
 		cerr << "Error: n must be > 0.\n";
 		return 1;
 	}
 
 	cout << "Enter t (number of cell selections, t >= 0): ";
 	if (!(cin >> cell_selection_count) || cell_selection_count < 0) {
+
 		cerr << "Error: t must be >= 0.\n";
 		return 1;
 	}
@@ -44,6 +50,7 @@ int main()
 
 	double r = static_cast<double>(cell_selection_count) /
 			   (static_cast<double>(board_size) * board_size);
+
 	double mean_value = board.mean_multiplicity();
 	double median_value = board.median_multiplicity();
 
@@ -52,6 +59,7 @@ int main()
 	cout << "n = " << board_size
 			  << ", t = " << cell_selection_count
 			  << ", r = t/n^2 = " << r << "\n";
+
 	cout << "Mean multiplicity:   " << mean_value << "\n";
 	cout << "Median multiplicity: " << median_value << "\n";
 

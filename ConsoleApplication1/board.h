@@ -4,6 +4,7 @@
 #include "random_cell.h"
 
 class Board {
+
 private:
     int board_size;
     int cell_selection_count;

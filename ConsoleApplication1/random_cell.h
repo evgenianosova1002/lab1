@@ -4,9 +4,13 @@
 #include <utility>
 
 class RandomCell {
+
+private:
     int board_size;
+
     std::mt19937 gen;
     std::uniform_int_distribution<int> dist;
+
 public:
     explicit RandomCell(int board_size)
         : board_size(board_size),
