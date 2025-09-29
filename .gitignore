@@ -1,5 +1,6 @@
 # Visual Studio
 .vs/
+*.sln
 *.suo
 *.user
 *.userosscache
@@ -28,6 +29,9 @@ ipch/
 *.lib
 *.exp
 ConsoleApplication2
+
+build/
+CMakeLists.txt
 
 .vscode/*
  !.vscode/settings.json
