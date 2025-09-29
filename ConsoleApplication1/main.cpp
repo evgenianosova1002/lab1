@@ -1,84 +1,76 @@
-﻿#include <iostream>
+﻿#include <algorithm>
 #include <iomanip>
-#include <vector>
+#include <iostream>
 #include <string>
+#include <vector>
+
 #include "board.h"
 
 using namespace std;
 
 static void print_heatmap(const vector<vector<int>>& grid) {
+    auto max_val = grid[0][0];
+    for (const auto& row : grid) {
+        max_val = max(max_val, *max_element(row.cbegin(), row.cend()));
+    }
 
-	int width = 0;
-	for (const auto& row : grid)
-
-		for (int v : row) {
-
-			int w = static_cast<int>(to_string(v).size());
-			if (w > width) width = w;
-		}
-	for (const auto& row : grid) {
-
-		for (int v : row) cout << setw(width + 1) << v;
-		cout << '\n';
-	}
+    const auto width = to_string(max_val).size();
+    for (const auto& row : grid) {
+        for (auto v : row) {
+            cout << setw(static_cast<int>(width) + 1) << v;
+        }
+        cout << '\n';
+    }
 }
 
-int main()
-{
-	ios::sync_with_stdio(false);
-	cin.tie(nullptr);
+int main() {
+    int board_size = 0;
+    int cell_selection_count = 0;
 
-	int board_size = 0;
-	int cell_selection_count = 0;
+    cout << "Enter n (board size, n > 0): ";
+    if (!(cin >> board_size) || board_size <= 0) {
+        cerr << "Error: n must be > 0.\n";
+        return 1;
+    }
 
-	cout << "Enter n (board size, n > 0): ";
-	if (!(cin >> board_size) || board_size <= 0) {
+    cout << "Enter t (number of cell selections, t >= 0): ";
+    if (!(cin >> cell_selection_count) || cell_selection_count < 0) {
+        cerr << "Error: t must be >= 0.\n";
+        return 1;
+    }
 
-		cerr << "Error: n must be > 0.\n";
-		return 1;
-	}
+    Board board(board_size, cell_selection_count);
+    board.run_experiment();
 
-	cout << "Enter t (number of cell selections, t >= 0): ";
-	if (!(cin >> cell_selection_count) || cell_selection_count < 0) {
+    const double r = static_cast<double>(cell_selection_count) /
+                     (static_cast<double>(board_size) * board_size);
 
-		cerr << "Error: t must be >= 0.\n";
-		return 1;
-	}
+    const auto mean_value = board.mean_multiplicity();
+    const auto median_value = board.median_multiplicity();
 
-	Board board(board_size, cell_selection_count);
-	board.run_experiment();
+    cout << fixed << setprecision(6);
+    cout << "\nMain Results:\n";
+    cout << "n = " << board_size << ", t = " << cell_selection_count
+         << ", r = t/n^2 = " << r << "\n";
 
-	double r = static_cast<double>(cell_selection_count) /
-			   (static_cast<double>(board_size) * board_size);
+    cout << "\nMean multiplicity:   " << mean_value << "\n";
+    cout << "Median multiplicity: " << median_value << "\n";
 
-	double mean_value = board.mean_multiplicity();
-	double median_value = board.median_multiplicity();
+    cout << "\nFrequency heatmap (" << board_size << "x" << board_size << "):\n";
+    print_heatmap(board.frequencies());
 
-	cout << fixed << setprecision(6);
-	cout << "\nMain Results:\n";
-	cout << "n = " << board_size
-			  << ", t = " << cell_selection_count
-			  << ", r = t/n^2 = " << r << "\n";
+    cout << "\nExperiment with different r:\n";
+    vector<double> r_values = {0.5, 1.0, 2.0, 5.0};
 
-	cout << "\nMean multiplicity:   " << mean_value << "\n";
-	cout << "Median multiplicity: " << median_value << "\n";
+    for (const auto rv : r_values) {
+        const int t = static_cast<int>(rv * board_size * board_size);
+        Board b(board_size, t);
+        b.run_experiment();
+        cout << "r = " << rv
+             << " (t = " << t << "): "
+             << "mean = " << b.mean_multiplicity()
+             << ", median = " << b.median_multiplicity() << "\n";
+    }
 
-	cout << "\nFrequency heatmap (" << board_size << "x" << board_size << "):\n";
-	print_heatmap(board.frequencies());
-
-	cout << "\nExperiment with different r:\n";
-	vector<double> r_values = { 0.5, 1.0, 2.0, 5.0 };
-
-	for (double rv : r_values) {
-
-		int t = static_cast<int>(rv * board_size * board_size);
-		Board b(board_size, t);
-		b.run_experiment();
-		cout << "r = " << rv
-			<< " (t = " << t << "): "
-			<< "mean = " << b.mean_multiplicity()
-			<< ", median = " << b.median_multiplicity() << "\n";
-	}
-
-	return 0;
+    return 0;
 }
